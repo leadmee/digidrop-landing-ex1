@@ -3,11 +3,12 @@ import { ChartColumn, KeyRound, Layers, MailCheck, ShieldCheck, Zap } from 'luci
 import FadeIn, { useReveal } from './ui/FadeIn'
 import Section from './ui/Section'
 import SpotlightCard from './ui/SpotlightCard'
+import Tag from './ui/Tag'
 
 function IconBadge({ icon: Icon }) {
   return (
-    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-brand/30 to-accent/30 text-accent">
-      <Icon size={20} />
+    <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-brand/30 to-accent/30 text-accent">
+      <Icon size={22} />
     </span>
   )
 }
@@ -89,8 +90,8 @@ export default function Features() {
         <FadeIn className="md:col-span-4">
           <SpotlightCard className="h-full">
             <IconBadge icon={ChartColumn} />
-            <h3 className="mt-4 text-xl font-semibold">Аналитика продаж</h3>
-            <p className="mt-2 max-w-xl text-sm leading-relaxed text-fog">
+            <h3 className="mt-5 text-2xl font-semibold">Аналитика продаж</h3>
+            <p className="mt-3 max-w-xl text-base leading-relaxed text-fog">
               Выручка, конверсия, география и повторные покупки в реальном времени. Понимайте,
               какой товар приносит деньги.
             </p>
@@ -102,53 +103,79 @@ export default function Features() {
           <SpotlightCard className="flex h-full flex-col justify-between">
             <div>
               <IconBadge icon={Zap} />
-              <h3 className="mt-4 text-xl font-semibold">Мгновенная доставка</h3>
-              <p className="mt-2 text-sm leading-relaxed text-fog">
+              <h3 className="mt-5 text-2xl font-semibold">Мгновенная доставка</h3>
+              <p className="mt-3 text-base leading-relaxed text-fog">
                 Файлы, ключи и доступы уходят покупателю в среднем за 0,3 секунды после оплаты.
               </p>
             </div>
-            <div className="mt-6 flex items-center gap-2 rounded-xl border border-white/5 bg-ink/40 px-4 py-3">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-60" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-mint" />
-              </span>
-              <p className="text-[12px] text-fog">
-                Аптайм <span className="text-snow">99,98%</span>
-              </p>
+            <div>
+              <div className="mt-6 flex items-center gap-2 rounded-xl border border-white/5 bg-ink/40 px-4 py-3">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-60" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-mint" />
+                </span>
+                <p className="text-[13px] text-fog">
+                  Аптайм <span className="text-snow">99,98%</span>
+                </p>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Tag>~0,3 с</Tag>
+                <Tag>вебхуки</Tag>
+              </div>
             </div>
           </SpotlightCard>
         </FadeIn>
 
         <FadeIn className="md:col-span-2" delay={0.04}>
-          <SpotlightCard className="h-full">
-            <IconBadge icon={ShieldCheck} />
-            <h3 className="mt-4 text-lg font-semibold">Защита контента</h3>
-            <p className="mt-2 text-sm leading-relaxed text-fog">
-              Ссылки с истечением срока, лимитом скачиваний и привязкой к e-mail. Водяные знаки
-              для PDF — имя покупателя на каждой странице.
-            </p>
+          <SpotlightCard className="flex h-full flex-col justify-between">
+            <div>
+              <IconBadge icon={ShieldCheck} />
+              <h3 className="mt-5 text-xl font-semibold">Защита контента</h3>
+              <p className="mt-3 text-base leading-relaxed text-fog">
+                Ссылки с истечением срока, лимитом скачиваний и привязкой к e-mail. Водяные знаки
+                для PDF — имя покупателя на каждой странице.
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Tag>TTL-ссылки</Tag>
+              <Tag>лимиты</Tag>
+              <Tag>водяные знаки</Tag>
+            </div>
           </SpotlightCard>
         </FadeIn>
 
         <FadeIn className="md:col-span-2" delay={0.08}>
-          <SpotlightCard className="h-full">
-            <IconBadge icon={KeyRound} />
-            <h3 className="mt-4 text-lg font-semibold">Лицензионные ключи</h3>
-            <p className="mt-2 text-sm leading-relaxed text-fog">
-              Генерируйте ключи автоматически или загрузите свой список. Активации, отзыв ключей
-              и статистика — в одном окне.
-            </p>
+          <SpotlightCard className="flex h-full flex-col justify-between">
+            <div>
+              <IconBadge icon={KeyRound} />
+              <h3 className="mt-5 text-xl font-semibold">Лицензионные ключи</h3>
+              <p className="mt-3 text-base leading-relaxed text-fog">
+                Генерируйте ключи автоматически или загрузите свой список. Активации, отзыв ключей
+                и статистика — в одном окне.
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Tag>авто-генерация</Tag>
+              <Tag>отзыв</Tag>
+              <Tag>активации</Tag>
+            </div>
           </SpotlightCard>
         </FadeIn>
 
         <FadeIn className="md:col-span-2" delay={0.12}>
-          <SpotlightCard className="h-full">
-            <IconBadge icon={Layers} />
-            <h3 className="mt-4 text-lg font-semibold">Любые форматы</h3>
-            <p className="mt-2 text-sm leading-relaxed text-fog">
-              E-book, видеокурсы, софт, пресеты, сэмплы, шаблоны — файлы до 10 ГБ, стриминг видео
-              без скачивания.
-            </p>
+          <SpotlightCard className="flex h-full flex-col justify-between">
+            <div>
+              <IconBadge icon={Layers} />
+              <h3 className="mt-5 text-xl font-semibold">Любые форматы</h3>
+              <p className="mt-3 text-base leading-relaxed text-fog">
+                E-book, видеокурсы, софт, пресеты, сэмплы, шаблоны — файлы до 10 ГБ, стриминг видео
+                без скачивания.
+              </p>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Tag>до 10 ГБ</Tag>
+              <Tag>стриминг видео</Tag>
+            </div>
           </SpotlightCard>
         </FadeIn>
 
@@ -157,10 +184,15 @@ export default function Features() {
             <div className="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
               <div className="max-w-xl">
                 <IconBadge icon={MailCheck} />
-                <h3 className="mt-4 text-xl font-semibold">Письма под вашим брендом</h3>
-                <p className="mt-2 text-sm leading-relaxed text-fog">
+                <h3 className="mt-5 text-2xl font-semibold">Письма под вашим брендом</h3>
+                <p className="mt-3 text-base leading-relaxed text-fog">
                   Свой домен, логотип и шаблоны. Покупатель видит вас, а не нас.
                 </p>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <Tag>свой домен</Tag>
+                  <Tag>логотип</Tag>
+                  <Tag>шаблоны</Tag>
+                </div>
               </div>
               <EmailPreview />
             </div>

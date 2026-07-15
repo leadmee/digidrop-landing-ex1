@@ -2,27 +2,32 @@ import { CreditCard, Link, TrendingUp, Upload } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import FadeIn from './ui/FadeIn'
 import GlowButton from './ui/GlowButton'
+import Tag from './ui/Tag'
 
 const steps = [
   {
     icon: Upload,
     title: 'Загрузите товар',
     text: 'Перетащите файл или добавьте ключи. Обложка, описание и цена — в том же окне.',
+    tags: ['drag & drop', 'до 10 ГБ', 'обложка + цена'],
   },
   {
     icon: CreditCard,
     title: 'Подключите оплату',
     text: 'Stripe, PayPal или Paddle — в два клика. Деньги идут напрямую на ваш счёт.',
+    tags: ['Stripe', 'PayPal', 'Paddle'],
   },
   {
     icon: Link,
     title: 'Поделитесь ссылкой',
     text: 'Вставьте платёжную ссылку в соцсети, на сайт или в рассылку. Свой сайт не обязателен.',
+    tags: ['1 ссылка', 'любая площадка', 'без сайта'],
   },
   {
     icon: TrendingUp,
     title: 'Получайте деньги',
     text: 'Оплата → мгновенная доставка → довольный клиент. Вы просто смотрите на график продаж.',
+    tags: ['0% комиссии', 'выплаты 24/7', 'аналитика'],
   },
 ]
 
@@ -30,22 +35,34 @@ function StepCard({ step, index, horizontal }) {
   const Icon = step.icon
   return (
     <div
-      className={`glass relative flex flex-col rounded-3xl p-8 ${
-        horizontal ? 'h-[62vh] w-[78vw] shrink-0 justify-between sm:w-[60vw] lg:w-[38vw]' : ''
+      className={`glass relative flex flex-col justify-between overflow-hidden rounded-3xl p-8 ${
+        horizontal ? 'h-[52vh] w-[82vw] shrink-0 sm:w-[56vw] lg:w-[34vw]' : 'min-h-[280px]'
       }`}
     >
       <span
-        className="select-none bg-gradient-to-br from-brand to-accent bg-clip-text font-display text-6xl font-bold text-transparent md:text-8xl"
         aria-hidden="true"
+        className="pointer-events-none absolute -top-6 right-2 font-display text-[9rem] leading-none font-bold text-white/[0.05] select-none"
       >
         0{index + 1}
       </span>
-      <div className="mt-8">
-        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-brand/30 to-accent/30 text-accent">
-          <Icon size={24} />
-        </span>
-        <h3 className="mt-5 text-2xl font-semibold">{step.title}</h3>
-        <p className="mt-3 max-w-md text-base leading-relaxed text-fog">{step.text}</p>
+
+      <div className="relative">
+        <div className="flex items-center gap-3">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-brand/30 to-accent/30 text-accent">
+            <Icon size={24} />
+          </span>
+          <span className="text-xs font-medium tracking-[0.2em] text-accent uppercase">
+            Шаг 0{index + 1}
+          </span>
+        </div>
+        <h3 className="mt-6 text-2xl font-semibold md:text-3xl">{step.title}</h3>
+        <p className="mt-3 max-w-md text-base leading-relaxed text-fog md:text-lg">{step.text}</p>
+      </div>
+
+      <div className="relative mt-8 flex flex-wrap gap-2">
+        {step.tags.map((t) => (
+          <Tag key={t}>{t}</Tag>
+        ))}
       </div>
     </div>
   )
@@ -64,23 +81,62 @@ export default function HowItWorks() {
     setPinned(on)
     if (!on) return
 
-    const apply = () => {
+    let targetX = 0
+    let curX = 0
+    let targetBar = 0
+    let curBar = 0
+    let raf = null
+
+    const paint = (x, bar) => {
+      if (trackRef.current) trackRef.current.style.transform = `translate3d(${x}px, 0, 0)`
+      if (barRef.current) barRef.current.style.transform = `scaleX(${bar})`
+    }
+
+    const setTargets = () => {
       const sec = sectionRef.current
       const track = trackRef.current
       if (!sec || !track) return
       const scrollable = sec.offsetHeight - window.innerHeight
       const p = scrollable > 0 ? Math.min(1, Math.max(0, -sec.getBoundingClientRect().top / scrollable)) : 0
-      const dist = track.scrollWidth - track.parentElement.clientWidth
-      track.style.transform = `translate3d(${-p * Math.max(0, dist)}px, 0, 0)`
-      if (barRef.current) barRef.current.style.transform = `scaleX(${p})`
+      const dist = Math.max(0, track.scrollWidth - track.parentElement.clientWidth)
+      targetX = -p * dist
+      targetBar = p
     }
 
-    apply()
-    window.addEventListener('scroll', apply, { passive: true })
-    window.addEventListener('resize', apply)
+    // rAF lerp gives the horizontal scroll weight and inertia (trails the cursor)
+    const tick = () => {
+      curX += (targetX - curX) * 0.085
+      curBar += (targetBar - curBar) * 0.12
+      paint(curX, curBar)
+      if (Math.abs(targetX - curX) > 0.3 || Math.abs(targetBar - curBar) > 0.002) {
+        raf = requestAnimationFrame(tick)
+      } else {
+        curX = targetX
+        curBar = targetBar
+        paint(curX, curBar)
+        raf = null
+      }
+    }
+
+    const onScroll = () => {
+      setTargets()
+      // Hidden tabs (preview) and reduced motion freeze rAF — apply instantly there
+      if (document.visibilityState === 'hidden') {
+        curX = targetX
+        curBar = targetBar
+        paint(curX, curBar)
+        return
+      }
+      if (!raf) raf = requestAnimationFrame(tick)
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
     return () => {
-      window.removeEventListener('scroll', apply)
-      window.removeEventListener('resize', apply)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
     }
   }, [])
 
@@ -96,7 +152,7 @@ export default function HowItWorks() {
   )
 
   return (
-    <section id="how" ref={sectionRef} style={pinned ? { height: '340vh' } : undefined}>
+    <section id="how" ref={sectionRef} style={pinned ? { height: '360vh' } : undefined}>
       <div
         className={
           pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden py-16' : 'py-24 md:py-32'

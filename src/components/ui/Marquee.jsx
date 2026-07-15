@@ -1,7 +1,11 @@
 export default function Marquee({ items, reverse = false, speed = 30 }) {
-  const content = [...items, ...items]
+  // Two identical halves make the -50% translate seamless. Each half repeats the
+  // items enough times to always exceed the viewport width, so the belt never
+  // shows a gap on wide screens.
+  const half = [...items, ...items, ...items]
+  const content = [...half, ...half]
   return (
-    <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]">
+    <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
       <div
         className={`flex w-max gap-4 py-2 hover:[animation-play-state:paused] ${
           reverse ? 'animate-marquee-reverse' : 'animate-marquee'

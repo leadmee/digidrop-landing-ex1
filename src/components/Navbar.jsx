@@ -22,12 +22,12 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled || open ? 'border-b border-white/10 bg-ink/85 backdrop-blur-xl' : 'bg-transparent'
-      }`}
-    >
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 md:px-8">
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 md:pt-4">
+      <div
+        className={`mx-auto flex h-14 w-full max-w-5xl items-center justify-between rounded-full px-4 pr-2 transition-all duration-300 md:px-6 ${
+          scrolled || open ? 'glass shadow-lg' : 'border border-transparent'
+        }`}
+      >
         <a href="#" className="flex items-center gap-2.5">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-accent">
             <Zap size={17} className="text-white" fill="currentColor" />
@@ -65,9 +65,9 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="overflow-hidden border-t border-white/5 md:hidden"
+            className="glass mx-auto mt-2 max-w-5xl overflow-hidden rounded-3xl md:hidden"
           >
-            <div className="flex flex-col gap-1 px-5 py-4">
+            <div className="flex flex-col gap-1 p-4">
               {links.map((l) => (
                 <a
                   key={l.href}

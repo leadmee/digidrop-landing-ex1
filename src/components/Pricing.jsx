@@ -94,10 +94,10 @@ export default function Pricing() {
           return (
             <FadeIn key={p.name} delay={i * 0.1}>
               <div
-                className={`relative flex h-full flex-col rounded-2xl border p-7 ${
+                className={`glass relative flex h-full flex-col rounded-3xl p-7 transition-transform duration-300 ${
                   p.featured
-                    ? 'border-brand/60 bg-card shadow-[0_0_50px_rgba(124,58,237,0.25)] md:-translate-y-3'
-                    : 'border-white/10 bg-card'
+                    ? '!border-brand/60 shadow-[0_0_60px_rgba(124,58,237,0.3)] md:-translate-y-5 md:scale-[1.03]'
+                    : 'hover:-translate-y-1'
                 }`}
               >
                 {p.featured && (

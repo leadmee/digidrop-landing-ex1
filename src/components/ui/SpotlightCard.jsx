@@ -13,7 +13,7 @@ export default function SpotlightCard({ children, className = '' }) {
     <div
       ref={ref}
       onMouseMove={onMove}
-      className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-card p-6 transition-colors duration-300 hover:border-brand/40 md:p-7 ${className}`}
+      className={`glass group relative overflow-hidden rounded-2xl p-6 transition-colors duration-300 hover:border-brand/40 md:p-7 ${className}`}
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"

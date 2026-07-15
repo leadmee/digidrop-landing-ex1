@@ -8,24 +8,28 @@ import Integrations from './components/Integrations'
 import Navbar from './components/Navbar'
 import Pricing from './components/Pricing'
 import ProblemSolution from './components/ProblemSolution'
+import ScrollBackground from './components/ScrollBackground'
 import Testimonials from './components/Testimonials'
 
 export default function App() {
   return (
-    <div className="noise relative overflow-x-clip bg-ink font-sans text-snow antialiased">
-      <Navbar />
-      <main>
-        <Hero />
-        <ProblemSolution />
-        <Features />
-        <HowItWorks />
-        <Integrations />
-        <Pricing />
-        <Testimonials />
-        <FAQ />
-        <FinalCTA />
-      </main>
-      <Footer />
+    <div className="noise relative font-sans text-snow antialiased">
+      <ScrollBackground />
+      <div className="relative z-10 overflow-x-clip">
+        <Navbar />
+        <main>
+          <Hero />
+          <ProblemSolution />
+          <Features />
+          <HowItWorks />
+          <Integrations />
+          <Pricing />
+          <Testimonials />
+          <FAQ />
+          <FinalCTA />
+        </main>
+        <Footer />
+      </div>
     </div>
   )
 }

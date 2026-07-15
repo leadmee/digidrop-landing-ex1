@@ -1,6 +1,7 @@
 import {
   Bitcoin,
   Braces,
+  Building2,
   ChartLine,
   Citrus,
   Coins,
@@ -12,7 +13,6 @@ import {
   Wallet,
   Webhook,
   Workflow,
-  Building2,
 } from 'lucide-react'
 import FadeIn from './ui/FadeIn'
 import Marquee from './ui/Marquee'
@@ -42,18 +42,21 @@ const row2 = [
 export default function Integrations() {
   return (
     <Section
+      align="left"
       eyebrow="Интеграции"
       title="Встраивается в ваш рабочий процесс"
       subtitle="DigiDrop дружит с инструментами, которыми вы уже пользуетесь."
     >
       <FadeIn>
-        <div className="flex flex-col gap-4">
-          <Marquee items={row1} speed={34} />
-          <Marquee items={row2} speed={28} reverse />
+        <div className="relative -mx-5 overflow-hidden py-8 md:-mx-8">
+          <div className="flex origin-center flex-col gap-4 [transform:rotate(-3deg)_scale(1.06)]">
+            <Marquee items={row1} speed={38} />
+            <Marquee items={row2} speed={30} reverse />
+          </div>
         </div>
       </FadeIn>
 
-      <FadeIn className="mt-10 text-center" delay={0.15}>
+      <FadeIn className="mt-8" delay={0.15}>
         <p className="text-sm text-fog">
           Нет нужной интеграции? Подключите через API за один вечер —{' '}
           <a href="#" className="text-accent underline-offset-4 hover:underline">

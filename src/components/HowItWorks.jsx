@@ -1,8 +1,7 @@
-import { motion } from 'framer-motion'
 import { CreditCard, Link, TrendingUp, Upload } from 'lucide-react'
-import FadeIn, { useReveal } from './ui/FadeIn'
+import { useEffect, useRef, useState } from 'react'
+import FadeIn from './ui/FadeIn'
 import GlowButton from './ui/GlowButton'
-import Section from './ui/Section'
 
 const steps = [
   {
@@ -27,40 +26,118 @@ const steps = [
   },
 ]
 
-export default function HowItWorks() {
-  const [lineRef, lineShown] = useReveal()
+function StepCard({ step, index, horizontal }) {
+  const Icon = step.icon
   return (
-    <Section id="how" eyebrow="Как это работает" title="От загрузки файла до первой продажи — 4 шага">
-      <div ref={lineRef} className="relative">
-        <motion.div
-          className="absolute top-7 right-[12.5%] left-[12.5%] hidden h-px bg-gradient-to-r from-brand via-accent to-brand md:block"
-          style={{ originX: 0 }}
-          initial={{ scaleX: 0 }}
-          animate={lineShown ? { scaleX: 1 } : undefined}
-          transition={{ duration: 1.4, ease: 'easeInOut' }}
-        />
-
-        <div className="grid gap-10 md:grid-cols-4 md:gap-6">
-          {steps.map(({ icon: Icon, title, text }, i) => (
-            <FadeIn key={title} delay={i * 0.15} className="text-center">
-              <div className="relative mx-auto w-fit">
-                <span className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-card text-accent shadow-[0_0_20px_rgba(124,58,237,0.25)]">
-                  <Icon size={22} />
-                </span>
-                <span className="absolute -top-2 -right-3 z-20 rounded-full bg-gradient-to-r from-brand to-accent px-2 py-0.5 text-[10px] font-bold text-white">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-              </div>
-              <h3 className="mt-5 text-base font-semibold">{title}</h3>
-              <p className="mx-auto mt-2 max-w-[260px] text-sm leading-relaxed text-fog">{text}</p>
-            </FadeIn>
-          ))}
-        </div>
+    <div
+      className={`glass relative flex flex-col rounded-3xl p-8 ${
+        horizontal ? 'h-[62vh] w-[78vw] shrink-0 justify-between sm:w-[60vw] lg:w-[38vw]' : ''
+      }`}
+    >
+      <span
+        className="select-none bg-gradient-to-br from-brand to-accent bg-clip-text font-display text-6xl font-bold text-transparent md:text-8xl"
+        aria-hidden="true"
+      >
+        0{index + 1}
+      </span>
+      <div className="mt-8">
+        <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-brand/30 to-accent/30 text-accent">
+          <Icon size={24} />
+        </span>
+        <h3 className="mt-5 text-2xl font-semibold">{step.title}</h3>
+        <p className="mt-3 max-w-md text-base leading-relaxed text-fog">{step.text}</p>
       </div>
+    </div>
+  )
+}
 
-      <FadeIn className="mt-14 text-center" delay={0.3}>
-        <GlowButton href="#pricing">Сделать первый шаг</GlowButton>
-      </FadeIn>
-    </Section>
+export default function HowItWorks() {
+  const sectionRef = useRef(null)
+  const trackRef = useRef(null)
+  const barRef = useRef(null)
+  const [pinned, setPinned] = useState(false)
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const desktop = window.matchMedia('(min-width: 768px)').matches
+    const on = desktop && !reduce
+    setPinned(on)
+    if (!on) return
+
+    const apply = () => {
+      const sec = sectionRef.current
+      const track = trackRef.current
+      if (!sec || !track) return
+      const scrollable = sec.offsetHeight - window.innerHeight
+      const p = scrollable > 0 ? Math.min(1, Math.max(0, -sec.getBoundingClientRect().top / scrollable)) : 0
+      const dist = track.scrollWidth - track.parentElement.clientWidth
+      track.style.transform = `translate3d(${-p * Math.max(0, dist)}px, 0, 0)`
+      if (barRef.current) barRef.current.style.transform = `scaleX(${p})`
+    }
+
+    apply()
+    window.addEventListener('scroll', apply, { passive: true })
+    window.addEventListener('resize', apply)
+    return () => {
+      window.removeEventListener('scroll', apply)
+      window.removeEventListener('resize', apply)
+    }
+  }, [])
+
+  const Header = (
+    <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
+      <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-4 py-1.5 text-xs font-medium tracking-wide text-accent">
+        Как это работает
+      </span>
+      <h2 className="font-display text-3xl leading-[1.1] font-semibold tracking-tight text-balance md:text-5xl">
+        От загрузки файла до первой продажи — 4 шага
+      </h2>
+    </div>
+  )
+
+  return (
+    <section id="how" ref={sectionRef} style={pinned ? { height: '340vh' } : undefined}>
+      <div
+        className={
+          pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden py-16' : 'py-24 md:py-32'
+        }
+      >
+        {pinned ? (
+          <>
+            <div className="shrink-0">{Header}</div>
+            <div className="mt-10 overflow-hidden">
+              <div ref={trackRef} className="flex gap-6 px-5 will-change-transform md:px-8">
+                {steps.map((s, i) => (
+                  <StepCard key={s.title} step={s} index={i} horizontal />
+                ))}
+              </div>
+            </div>
+            <div className="mx-auto mt-10 h-1 w-full max-w-7xl px-5 md:px-8">
+              <div className="h-full overflow-hidden rounded-full bg-white/10">
+                <div
+                  ref={barRef}
+                  className="h-full origin-left rounded-full bg-gradient-to-r from-brand to-accent"
+                  style={{ transform: 'scaleX(0)' }}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {Header}
+            <div className="mx-auto mt-12 grid w-full max-w-7xl gap-5 px-5 md:px-8">
+              {steps.map((s, i) => (
+                <FadeIn key={s.title} delay={i * 0.08}>
+                  <StepCard step={s} index={i} horizontal={false} />
+                </FadeIn>
+              ))}
+            </div>
+            <div className="mx-auto mt-12 w-full max-w-7xl px-5 md:px-8">
+              <GlowButton href="#pricing">Сделать первый шаг</GlowButton>
+            </div>
+          </>
+        )}
+      </div>
+    </section>
   )
 }

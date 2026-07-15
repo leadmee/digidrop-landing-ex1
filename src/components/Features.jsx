@@ -6,7 +6,7 @@ import SpotlightCard from './ui/SpotlightCard'
 
 function IconBadge({ icon: Icon }) {
   return (
-    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-brand/25 to-accent/25 text-accent">
+    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-brand/30 to-accent/30 text-accent">
       <Icon size={20} />
     </span>
   )
@@ -15,7 +15,7 @@ function IconBadge({ icon: Icon }) {
 function AnalyticsChart() {
   const [ref, shown] = useReveal()
   return (
-    <div ref={ref} className="mt-6 rounded-xl border border-white/5 bg-ink/60 p-4">
+    <div ref={ref} className="mt-6 rounded-xl border border-white/5 bg-ink/40 p-4">
       <div className="flex items-baseline justify-between">
         <div>
           <p className="text-[11px] text-fog">Выручка за неделю</p>
@@ -57,7 +57,7 @@ function AnalyticsChart() {
 
 function EmailPreview() {
   return (
-    <div className="w-full shrink-0 rounded-xl border border-white/10 bg-ink/60 p-5 md:w-80">
+    <div className="w-full shrink-0 rounded-xl border border-white/10 bg-ink/40 p-5 md:w-80">
       <div className="flex items-center gap-2.5 border-b border-white/5 pb-3">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent text-xs font-semibold text-white">
           Y
@@ -81,14 +81,15 @@ export default function Features() {
   return (
     <Section
       id="features"
+      align="left"
       eyebrow="Возможности"
       title="Всё, что нужно между «оплатил» и «получил»"
     >
-      <div className="grid gap-4 md:grid-cols-3">
-        <FadeIn className="md:col-span-2">
+      <div className="grid auto-rows-[minmax(0,auto)] grid-cols-1 gap-4 md:grid-cols-6">
+        <FadeIn className="md:col-span-4">
           <SpotlightCard className="h-full">
             <IconBadge icon={ChartColumn} />
-            <h3 className="mt-4 text-lg font-semibold">Аналитика продаж</h3>
+            <h3 className="mt-4 text-xl font-semibold">Аналитика продаж</h3>
             <p className="mt-2 max-w-xl text-sm leading-relaxed text-fog">
               Выручка, конверсия, география и повторные покупки в реальном времени. Понимайте,
               какой товар приносит деньги.
@@ -97,27 +98,28 @@ export default function Features() {
           </SpotlightCard>
         </FadeIn>
 
-        <FadeIn delay={0.1}>
-          <SpotlightCard className="h-full">
-            <IconBadge icon={Zap} />
-            <h3 className="mt-4 text-lg font-semibold">Мгновенная доставка</h3>
-            <p className="mt-2 text-sm leading-relaxed text-fog">
-              Файлы, ключи и доступы уходят покупателю в среднем за 0,3 секунды после
-              подтверждения оплаты.
-            </p>
-            <div className="mt-6 flex items-center gap-2 rounded-xl border border-white/5 bg-ink/60 px-4 py-3">
+        <FadeIn className="md:col-span-2" delay={0.08}>
+          <SpotlightCard className="flex h-full flex-col justify-between">
+            <div>
+              <IconBadge icon={Zap} />
+              <h3 className="mt-4 text-xl font-semibold">Мгновенная доставка</h3>
+              <p className="mt-2 text-sm leading-relaxed text-fog">
+                Файлы, ключи и доступы уходят покупателю в среднем за 0,3 секунды после оплаты.
+              </p>
+            </div>
+            <div className="mt-6 flex items-center gap-2 rounded-xl border border-white/5 bg-ink/40 px-4 py-3">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-mint opacity-60" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-mint" />
               </span>
               <p className="text-[12px] text-fog">
-                Доставка работает: <span className="text-snow">аптайм 99,98%</span>
+                Аптайм <span className="text-snow">99,98%</span>
               </p>
             </div>
           </SpotlightCard>
         </FadeIn>
 
-        <FadeIn delay={0.05}>
+        <FadeIn className="md:col-span-2" delay={0.04}>
           <SpotlightCard className="h-full">
             <IconBadge icon={ShieldCheck} />
             <h3 className="mt-4 text-lg font-semibold">Защита контента</h3>
@@ -128,7 +130,7 @@ export default function Features() {
           </SpotlightCard>
         </FadeIn>
 
-        <FadeIn delay={0.1}>
+        <FadeIn className="md:col-span-2" delay={0.08}>
           <SpotlightCard className="h-full">
             <IconBadge icon={KeyRound} />
             <h3 className="mt-4 text-lg font-semibold">Лицензионные ключи</h3>
@@ -139,7 +141,7 @@ export default function Features() {
           </SpotlightCard>
         </FadeIn>
 
-        <FadeIn delay={0.15}>
+        <FadeIn className="md:col-span-2" delay={0.12}>
           <SpotlightCard className="h-full">
             <IconBadge icon={Layers} />
             <h3 className="mt-4 text-lg font-semibold">Любые форматы</h3>
@@ -150,12 +152,12 @@ export default function Features() {
           </SpotlightCard>
         </FadeIn>
 
-        <FadeIn className="md:col-span-3" delay={0.1}>
+        <FadeIn className="md:col-span-6" delay={0.06}>
           <SpotlightCard className="h-full">
             <div className="flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
               <div className="max-w-xl">
                 <IconBadge icon={MailCheck} />
-                <h3 className="mt-4 text-lg font-semibold">Письма под вашим брендом</h3>
+                <h3 className="mt-4 text-xl font-semibold">Письма под вашим брендом</h3>
                 <p className="mt-2 text-sm leading-relaxed text-fog">
                   Свой домен, логотип и шаблоны. Покупатель видит вас, а не нас.
                 </p>

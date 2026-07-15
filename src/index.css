@@ -5,6 +5,8 @@
   --color-card: #151827;
   --color-brand: #7c3aed;
   --color-accent: #22d3ee;
+  --color-magenta: #d946ef;
+  --color-indigo: #6366f1;
   --color-mint: #34d399;
   --color-fog: #94a3b8;
   --color-snow: #f8fafc;
@@ -13,6 +15,8 @@
   --animate-marquee: marquee 30s linear infinite;
   --animate-marquee-reverse: marquee-reverse 30s linear infinite;
   --animate-pulse-glow: pulse-glow 6s ease-in-out infinite;
+  --animate-float: float 12s ease-in-out infinite;
+  --animate-float-slow: float 20s ease-in-out infinite;
 }
 
 @keyframes marquee {
@@ -40,6 +44,16 @@
   }
 }
 
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -22px, 0);
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -63,7 +77,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e2235;
+  background: linear-gradient(#7c3aed, #22d3ee);
   border-radius: 8px;
 }
 
@@ -82,4 +96,383 @@ body {
   pointer-events: none;
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Frosted-glass surface: lets the animated background bleed through */
+.glass {
+  background: color-mix(in srgb, var(--color-card) 62%, transparent);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ---- Isometric cube (single, reusable) --------------------------------- */
+/* One element renders a full iso cube: the element is the front-right face,
+   ::before is the top face, ::after is the left face. --s = edge size,
+   --c = base color. Adapted from the reference box technique. */
+.iso-cube {
+  width: var(--s, 48px);
+  height: var(--s, 48px);
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg);
+  background-color: var(--c, #7c3aed);
+}
+
+.iso-cube::before,
+.iso-cube::after {
+  content: "";
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  background-color: inherit;
+}
+
+.iso-cube::before {
+  transform: rotateX(90deg) translateZ(calc(var(--s, 48px) / 2))
+    translateY(calc(var(--s, 48px) / -2));
+  filter: brightness(1.35);
+}
+
+.iso-cube::after {
+  transform: rotateY(90deg) translateZ(calc(var(--s, 48px) / 2))
+    translateX(calc(var(--s, 48px) / 2));
+  filter: brightness(0.7);
+}
+
+/* ---- Cube assembly scene (hero centerpiece) ---------------------------- */
+/* Eight cubes fly in from scattered positions, assemble into a 2x2x2 stack,
+   a ground plate flashes, then the stack drops away — looped ambient.
+   Ported and recolored from the reference loader. */
+.cube-scene {
+  --duration: 4s;
+  --primary: #7c3aed;
+  --primary-light: #22d3ee;
+  --primary-rgba: rgba(124, 58, 237, 0);
+  width: 200px;
+  height: 320px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.cube-scene::before,
+.cube-scene::after {
+  --r: 20.5deg;
+  content: "";
+  width: 320px;
+  height: 140px;
+  position: absolute;
+  right: 32%;
+  bottom: -11px;
+  background: #0b0d17;
+  transform: translateZ(200px) rotate(var(--r));
+  animation: cube-mask var(--duration) linear forwards infinite;
+}
+
+.cube-scene::after {
+  --r: -20.5deg;
+  right: auto;
+  left: 32%;
+}
+
+.cube-scene .ground {
+  position: absolute;
+  left: -50px;
+  bottom: -120px;
+  transform-style: preserve-3d;
+  transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1);
+}
+
+.cube-scene .ground div {
+  transform: rotateX(90deg) rotateY(0deg) translate(-48px, -120px) translateZ(100px)
+    scale(0);
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(
+    45deg,
+    var(--primary) 0%,
+    var(--primary) 50%,
+    var(--primary-light) 50%,
+    var(--primary-light) 100%
+  );
+  transform-style: preserve-3d;
+  animation: cube-ground var(--duration) linear forwards infinite;
+}
+
+.cube-scene .ground div::before,
+.cube-scene .ground div::after {
+  --rx: 90deg;
+  --ry: 0deg;
+  --x: 44px;
+  --y: 162px;
+  --z: -50px;
+  content: "";
+  width: 156px;
+  height: 300px;
+  opacity: 0;
+  background: linear-gradient(var(--primary), var(--primary-rgba));
+  position: absolute;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) translate(var(--x), var(--y))
+    translateZ(var(--z));
+  animation: cube-ground-shine var(--duration) linear forwards infinite;
+}
+
+.cube-scene .ground div::after {
+  --ry: 90deg;
+  --x: 0;
+  --y: 177px;
+  --z: 150px;
+}
+
+.cube-scene .box {
+  --x: 0;
+  --y: 0;
+  position: absolute;
+  animation: var(--duration) linear forwards infinite;
+  transform: translate(var(--x), var(--y));
+}
+
+.cube-scene .box div {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  transform-style: preserve-3d;
+  background-color: var(--primary);
+  animation: var(--duration) ease forwards infinite;
+  transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0);
+}
+
+.cube-scene .box div::before,
+.cube-scene .box div::after {
+  --rx: 90deg;
+  --ry: 0deg;
+  --z: 24px;
+  --y: -24px;
+  --x: 0;
+  content: "";
+  position: absolute;
+  background-color: inherit;
+  width: inherit;
+  height: inherit;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) translate(var(--x), var(--y))
+    translateZ(var(--z));
+  filter: brightness(var(--b, 1.3));
+}
+
+.cube-scene .box div::after {
+  --rx: 0deg;
+  --ry: 90deg;
+  --x: 24px;
+  --y: 0;
+  --b: 0.7;
+}
+
+.cube-scene .box0 {
+  --x: -220px;
+  --y: -120px;
+  left: 58px;
+  top: 108px;
+  animation-name: cube-move0;
+}
+.cube-scene .box0 div {
+  animation-name: cube-scale0;
+}
+.cube-scene .box1 {
+  --x: -260px;
+  --y: 120px;
+  left: 25px;
+  top: 120px;
+  animation-name: cube-move1;
+}
+.cube-scene .box1 div {
+  animation-name: cube-scale1;
+}
+.cube-scene .box2 {
+  --x: 120px;
+  --y: -190px;
+  left: 58px;
+  top: 64px;
+  animation-name: cube-move2;
+}
+.cube-scene .box2 div {
+  animation-name: cube-scale2;
+}
+.cube-scene .box3 {
+  --x: 280px;
+  --y: -40px;
+  left: 91px;
+  top: 120px;
+  animation-name: cube-move3;
+}
+.cube-scene .box3 div {
+  animation-name: cube-scale3;
+}
+.cube-scene .box4 {
+  --x: 60px;
+  --y: 200px;
+  left: 58px;
+  top: 132px;
+  animation-name: cube-move4;
+}
+.cube-scene .box4 div {
+  animation-name: cube-scale4;
+}
+.cube-scene .box5 {
+  --x: -220px;
+  --y: -120px;
+  left: 25px;
+  top: 76px;
+  animation-name: cube-move5;
+}
+.cube-scene .box5 div {
+  animation-name: cube-scale5;
+}
+.cube-scene .box6 {
+  --x: -260px;
+  --y: 120px;
+  left: 91px;
+  top: 76px;
+  animation-name: cube-move6;
+}
+.cube-scene .box6 div {
+  animation-name: cube-scale6;
+}
+.cube-scene .box7 {
+  --x: -240px;
+  --y: 200px;
+  left: 58px;
+  top: 87px;
+  animation-name: cube-move7;
+}
+.cube-scene .box7 div {
+  animation-name: cube-scale7;
+}
+
+@keyframes cube-move0 {
+  12% { transform: translate(var(--x), var(--y)); }
+  25%, 52% { transform: translate(0, 0); }
+  80% { transform: translate(0, -32px); }
+  90%, 100% { transform: translate(0, 188px); }
+}
+@keyframes cube-scale0 {
+  6% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0); }
+  14%, 100% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1); }
+}
+@keyframes cube-move1 {
+  16% { transform: translate(var(--x), var(--y)); }
+  29%, 52% { transform: translate(0, 0); }
+  80% { transform: translate(0, -32px); }
+  90%, 100% { transform: translate(0, 188px); }
+}
+@keyframes cube-scale1 {
+  10% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0); }
+  18%, 100% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1); }
+}
+@keyframes cube-move2 {
+  20% { transform: translate(var(--x), var(--y)); }
+  33%, 52% { transform: translate(0, 0); }
+  80% { transform: translate(0, -32px); }
+  90%, 100% { transform: translate(0, 188px); }
+}
+@keyframes cube-scale2 {
+  14% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0); }
+  22%, 100% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1); }
+}
+@keyframes cube-move3 {
+  24% { transform: translate(var(--x), var(--y)); }
+  37%, 52% { transform: translate(0, 0); }
+  80% { transform: translate(0, -32px); }
+  90%, 100% { transform: translate(0, 188px); }
+}
+@keyframes cube-scale3 {
+  18% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0); }
+  26%, 100% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1); }
+}
+@keyframes cube-move4 {
+  28% { transform: translate(var(--x), var(--y)); }
+  41%, 52% { transform: translate(0, 0); }
+  80% { transform: translate(0, -32px); }
+  90%, 100% { transform: translate(0, 188px); }
+}
+@keyframes cube-scale4 {
+  22% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0); }
+  30%, 100% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1); }
+}
+@keyframes cube-move5 {
+  32% { transform: translate(var(--x), var(--y)); }
+  45%, 52% { transform: translate(0, 0); }
+  80% { transform: translate(0, -32px); }
+  90%, 100% { transform: translate(0, 188px); }
+}
+@keyframes cube-scale5 {
+  26% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0); }
+  34%, 100% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1); }
+}
+@keyframes cube-move6 {
+  36% { transform: translate(var(--x), var(--y)); }
+  49%, 52% { transform: translate(0, 0); }
+  80% { transform: translate(0, -32px); }
+  90%, 100% { transform: translate(0, 188px); }
+}
+@keyframes cube-scale6 {
+  30% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0); }
+  38%, 100% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1); }
+}
+@keyframes cube-move7 {
+  40% { transform: translate(var(--x), var(--y)); }
+  52% { transform: translate(0, 0); }
+  80% { transform: translate(0, -32px); }
+  90%, 100% { transform: translate(0, 188px); }
+}
+@keyframes cube-scale7 {
+  34% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(0); }
+  42%, 100% { transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1); }
+}
+@keyframes cube-ground {
+  0%, 65% {
+    transform: rotateX(90deg) rotateY(0deg) translate(-48px, -120px) translateZ(100px) scale(0);
+  }
+  75%, 90% {
+    transform: rotateX(90deg) rotateY(0deg) translate(-48px, -120px) translateZ(100px) scale(1);
+  }
+  100% {
+    transform: rotateX(90deg) rotateY(0deg) translate(-48px, -120px) translateZ(100px) scale(0);
+  }
+}
+@keyframes cube-ground-shine {
+  0%, 70% { opacity: 0; }
+  75%, 87% { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+@keyframes cube-mask {
+  0%, 65% { opacity: 0; }
+  66%, 100% { opacity: 1; }
+}
+
+/* Static assembled stack for reduced-motion / hidden tab */
+.cube-scene.is-static .box div {
+  animation: none;
+  transform: rotateY(-47deg) rotateX(-15deg) rotateZ(15deg) scale(1);
+}
+.cube-scene.is-static .box {
+  animation: none;
+  transform: translate(0, 0);
+}
+.cube-scene.is-static::before,
+.cube-scene.is-static::after,
+.cube-scene.is-static .ground {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-float,
+  .animate-float-slow,
+  .animate-pulse-glow,
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+  }
 }

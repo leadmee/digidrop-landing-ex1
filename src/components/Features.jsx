@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { ChartColumn, KeyRound, Layers, MailCheck, ShieldCheck, Zap } from 'lucide-react'
-import FadeIn from './ui/FadeIn'
+import FadeIn, { useReveal } from './ui/FadeIn'
 import Section from './ui/Section'
 import SpotlightCard from './ui/SpotlightCard'
 
@@ -13,8 +13,9 @@ function IconBadge({ icon: Icon }) {
 }
 
 function AnalyticsChart() {
+  const [ref, shown] = useReveal()
   return (
-    <div className="mt-6 rounded-xl border border-white/5 bg-ink/60 p-4">
+    <div ref={ref} className="mt-6 rounded-xl border border-white/5 bg-ink/60 p-4">
       <div className="flex items-baseline justify-between">
         <div>
           <p className="text-[11px] text-fog">Выручка за неделю</p>
@@ -37,8 +38,7 @@ function AnalyticsChart() {
           d="M0 74 C 36 66, 54 42, 92 50 S 150 24, 196 32 250 10 320 16 L 320 90 L 0 90 Z"
           fill="url(#chart-fill)"
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={shown ? { opacity: 1 } : undefined}
           transition={{ duration: 1, delay: 0.8 }}
         />
         <motion.path
@@ -47,8 +47,7 @@ function AnalyticsChart() {
           strokeWidth="2.5"
           strokeLinecap="round"
           initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true }}
+          animate={shown ? { pathLength: 1 } : undefined}
           transition={{ duration: 1.6, ease: 'easeInOut' }}
         />
       </svg>

@@ -82,6 +82,9 @@ function DeliveryCycleCard() {
 }
 
 export default function Hero() {
+  // In hidden/background tabs rAF is frozen and enter animations never play —
+  // render the final state immediately so the page is never left blank
+  const instant = typeof document !== 'undefined' && document.visibilityState === 'hidden'
   return (
     <section className="relative overflow-hidden pt-36 pb-24 md:pt-44">
       <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_75%_60%_at_50%_0%,black_35%,transparent_100%)]" />
@@ -91,7 +94,7 @@ export default function Hero() {
       <div className="relative mx-auto w-full max-w-6xl px-5 md:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <motion.span
-            initial={{ opacity: 0, y: 16 }}
+            initial={instant ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-fog"
@@ -103,7 +106,7 @@ export default function Hero() {
           <motion.h1
             aria-label={words.join(' ')}
             className="mt-7 font-display text-[2.1rem] leading-[1.2] font-medium text-balance sm:text-5xl md:text-[3.4rem]"
-            initial="hidden"
+            initial={instant ? false : 'hidden'}
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.09, delayChildren: 0.2 } } }}
           >
@@ -125,7 +128,7 @@ export default function Hero() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={instant ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
             className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-fog md:text-lg"
@@ -135,7 +138,7 @@ export default function Hero() {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={instant ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.1 }}
             className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
@@ -147,7 +150,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.p
-            initial={{ opacity: 0 }}
+            initial={instant ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 1.35 }}
             className="mt-5 text-xs text-fog/80"
@@ -160,7 +163,7 @@ export default function Hero() {
           <div className="animate-pulse-glow absolute -inset-8 rounded-[2.5rem] bg-gradient-to-r from-brand/30 via-accent/20 to-brand/30 blur-3xl" />
 
           <motion.div
-            initial={{ opacity: 0, y: 70, rotateX: 18 }}
+            initial={instant ? false : { opacity: 0, y: 70, rotateX: 18 }}
             animate={{ opacity: 1, y: 0, rotateX: 7 }}
             transition={{ duration: 1, delay: 0.6, ease: 'easeOut' }}
             className="relative overflow-hidden rounded-2xl border border-white/10 bg-card/90 shadow-2xl backdrop-blur"
@@ -208,7 +211,7 @@ export default function Hero() {
                   {bars.map((h, i) => (
                     <motion.div
                       key={i}
-                      initial={{ height: 0 }}
+                      initial={instant ? false : { height: 0 }}
                       animate={{ height: `${h}%` }}
                       transition={{ duration: 0.7, delay: 1.2 + i * 0.06, ease: 'easeOut' }}
                       className="flex-1 rounded-t-sm bg-gradient-to-t from-brand/60 to-accent/80"
@@ -241,7 +244,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={instant ? false : { opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 1.5 }}
             className="absolute top-14 -right-4 hidden lg:block xl:-right-16"
@@ -252,7 +255,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={instant ? false : { opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 1.7 }}
             className="absolute bottom-16 -left-4 hidden lg:block xl:-left-16"

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { CreditCard, Link, TrendingUp, Upload } from 'lucide-react'
-import FadeIn from './ui/FadeIn'
+import FadeIn, { useReveal } from './ui/FadeIn'
 import GlowButton from './ui/GlowButton'
 import Section from './ui/Section'
 
@@ -28,15 +28,15 @@ const steps = [
 ]
 
 export default function HowItWorks() {
+  const [lineRef, lineShown] = useReveal()
   return (
     <Section id="how" eyebrow="Как это работает" title="От загрузки файла до первой продажи — 4 шага">
-      <div className="relative">
+      <div ref={lineRef} className="relative">
         <motion.div
           className="absolute top-7 right-[12.5%] left-[12.5%] hidden h-px bg-gradient-to-r from-brand via-accent to-brand md:block"
           style={{ originX: 0 }}
           initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true, margin: '-80px' }}
+          animate={lineShown ? { scaleX: 1 } : undefined}
           transition={{ duration: 1.4, ease: 'easeInOut' }}
         />
 

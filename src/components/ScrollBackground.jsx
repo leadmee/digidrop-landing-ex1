@@ -4,17 +4,17 @@ import { useEffect, useRef } from 'react'
 // (not framer-motion) so it updates even in hidden/background tabs, where rAF is
 // throttled — the same class of issue the useReveal fallback solves elsewhere.
 
-const RAMP_A = ['#7c3aed', '#22d3ee', '#d946ef', '#6366f1']
-const RAMP_B = ['#22d3ee', '#6366f1', '#7c3aed', '#d946ef']
+const RAMP_A = ['#52525b', '#71717a', '#3f3f46', '#5b5b64']
+const RAMP_B = ['#71717a', '#3f3f46', '#5b5b64', '#6b6b73']
 
 const CUBES = [
-  { left: '8%', top: '14%', size: 60, color: '#7c3aed', depth: 0.9, float: 'animate-float-slow' },
-  { left: '82%', top: '10%', size: 44, color: '#22d3ee', depth: 0.6, float: 'animate-float' },
-  { left: '70%', top: '38%', size: 96, color: '#6366f1', depth: 1.3, float: 'animate-float-slow' },
-  { left: '16%', top: '52%', size: 40, color: '#d946ef', depth: 0.5, float: 'animate-float' },
-  { left: '88%', top: '68%', size: 72, color: '#7c3aed', depth: 1.1, float: 'animate-float-slow' },
-  { left: '30%', top: '80%', size: 52, color: '#22d3ee', depth: 0.8, float: 'animate-float' },
-  { left: '54%', top: '92%', size: 64, color: '#d946ef', depth: 1.0, float: 'animate-float-slow' },
+  { left: '8%', top: '14%', size: 60, color: '#6b6b73', depth: 0.9, float: 'animate-float-slow' },
+  { left: '82%', top: '10%', size: 44, color: '#8a8a93', depth: 0.6, float: 'animate-float' },
+  { left: '70%', top: '38%', size: 96, color: '#55555e', depth: 1.3, float: 'animate-float-slow' },
+  { left: '16%', top: '52%', size: 40, color: '#9a9aa4', depth: 0.5, float: 'animate-float' },
+  { left: '88%', top: '68%', size: 72, color: '#6b6b73', depth: 1.1, float: 'animate-float-slow' },
+  { left: '30%', top: '80%', size: 52, color: '#8a8a93', depth: 0.8, float: 'animate-float' },
+  { left: '54%', top: '92%', size: 64, color: '#55555e', depth: 1.0, float: 'animate-float-slow' },
 ]
 
 function hexToRgb(h) {
@@ -79,12 +79,12 @@ export default function ScrollBackground() {
 
       <div
         ref={blobA}
-        className="absolute h-[70vh] w-[70vh] rounded-full opacity-50 blur-[120px]"
+        className="absolute h-[70vh] w-[70vh] rounded-full opacity-40 blur-[120px]"
         style={{ background: `radial-gradient(circle at center, ${RAMP_A[0]} 0%, transparent 68%)`, willChange: 'transform' }}
       />
       <div
         ref={blobB}
-        className="absolute right-0 h-[60vh] w-[60vh] rounded-full opacity-40 blur-[130px]"
+        className="absolute right-0 h-[60vh] w-[60vh] rounded-full opacity-30 blur-[130px]"
         style={{ background: `radial-gradient(circle at center, ${RAMP_B[0]} 0%, transparent 68%)`, willChange: 'transform' }}
       />
 

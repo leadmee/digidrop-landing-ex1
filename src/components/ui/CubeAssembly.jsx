@@ -15,9 +15,6 @@ export default function CubeAssembly({ className = '' }) {
       aria-label="Кубы собираются в цифровую посылку и доставляются"
     >
       <div className={`cube-scene ${staticStack ? 'is-static' : ''}`}>
-        <div className="ground">
-          <div />
-        </div>
         {Array.from({ length: 8 }).map((_, i) => (
           <div key={i} className={`box box${i}`}>
             <div />

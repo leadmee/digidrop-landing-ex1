@@ -6,16 +6,16 @@ import MagneticButton from './ui/MagneticButton'
 export default function FinalCTA() {
   return (
     <section className="relative overflow-hidden py-28 md:py-40">
-      <div className="absolute inset-0 bg-[radial-gradient(680px_circle_at_50%_45%,rgba(124,58,237,0.28),transparent_70%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(680px_circle_at_50%_45%,rgba(150,150,160,0.16),transparent_70%)]" />
 
       <div className="pointer-events-none absolute top-16 left-[12%] hidden opacity-40 md:block">
         <span className="animate-float inline-block">
-          <IsoCube size={56} color="#7c3aed" />
+          <IsoCube size={56} color="#6b6b73" />
         </span>
       </div>
       <div className="pointer-events-none absolute right-[14%] bottom-20 hidden opacity-40 md:block">
         <span className="animate-float-slow inline-block">
-          <IsoCube size={72} color="#22d3ee" />
+          <IsoCube size={72} color="#8a8a93" />
         </span>
       </div>
 

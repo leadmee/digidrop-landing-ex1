@@ -27,12 +27,12 @@ function AnalyticsChart() {
       <svg viewBox="0 0 320 90" className="mt-3 w-full" fill="none" aria-hidden="true">
         <defs>
           <linearGradient id="chart-line" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#7C3AED" />
-            <stop offset="1" stopColor="#22D3EE" />
+            <stop stopColor="#8a8a93" />
+            <stop offset="1" stopColor="#e9e9ee" />
           </linearGradient>
           <linearGradient id="chart-fill" x1="0" y1="0" x2="0" y2="90" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#7C3AED" stopOpacity="0.25" />
-            <stop offset="1" stopColor="#7C3AED" stopOpacity="0" />
+            <stop stopColor="#e9e9ee" stopOpacity="0.18" />
+            <stop offset="1" stopColor="#e9e9ee" stopOpacity="0" />
           </linearGradient>
         </defs>
         <motion.path
@@ -60,7 +60,7 @@ function EmailPreview() {
   return (
     <div className="w-full shrink-0 rounded-xl border border-white/10 bg-ink/40 p-5 md:w-80">
       <div className="flex items-center gap-2.5 border-b border-white/5 pb-3">
-        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent text-xs font-semibold text-white">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent text-xs font-semibold text-ink">
           Y
         </span>
         <div className="min-w-0">
@@ -71,7 +71,7 @@ function EmailPreview() {
       <p className="mt-3 text-[13px] leading-relaxed text-fog">
         Спасибо за покупку! Ваши файлы уже ждут вас — ссылка действует 72 часа.
       </p>
-      <span className="mt-4 inline-block rounded-lg bg-gradient-to-r from-brand to-accent px-4 py-2 text-[12px] font-semibold text-white">
+      <span className="mt-4 inline-block rounded-lg bg-gradient-to-r from-brand to-accent px-4 py-2 text-[12px] font-semibold text-ink">
         Скачать файлы
       </span>
     </div>

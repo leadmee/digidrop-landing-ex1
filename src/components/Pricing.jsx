@@ -79,9 +79,9 @@ export default function Pricing() {
                   transition={{ type: 'spring', stiffness: 400, damping: 32 }}
                 />
               )}
-              <span className={`relative z-10 ${yearly === key ? 'text-white' : 'text-fog'}`}>
+              <span className={`relative z-10 ${yearly === key ? 'text-ink' : 'text-fog'}`}>
                 {label}
-                {key && <span className="ml-1.5 text-mint">−20%</span>}
+                {key && <span className="ml-1.5 opacity-70">−20%</span>}
               </span>
             </button>
           ))}
@@ -96,12 +96,12 @@ export default function Pricing() {
               <div
                 className={`glass relative flex h-full flex-col rounded-3xl p-7 transition-transform duration-300 ${
                   p.featured
-                    ? '!border-brand/60 shadow-[0_0_60px_rgba(124,58,237,0.3)] md:-translate-y-5 md:scale-[1.03]'
+                    ? '!border-white/25 shadow-[0_0_60px_rgba(255,255,255,0.12)] md:-translate-y-5 md:scale-[1.03]'
                     : 'hover:-translate-y-1'
                 }`}
               >
                 {p.featured && (
-                  <span className="absolute -top-3.5 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-gradient-to-r from-brand to-accent px-4 py-1.5 text-xs font-semibold whitespace-nowrap text-white">
+                  <span className="absolute -top-3.5 left-1/2 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-gradient-to-r from-brand to-accent px-4 py-1.5 text-xs font-semibold whitespace-nowrap text-ink">
                     <Sparkles size={12} />
                     Популярный
                   </span>
@@ -143,7 +143,7 @@ export default function Pricing() {
                   href="#"
                   className={`mt-8 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 ${
                     p.featured
-                      ? 'bg-gradient-to-r from-brand to-accent text-white shadow-[0_0_24px_rgba(124,58,237,0.45)] hover:shadow-[0_0_40px_rgba(124,58,237,0.65)]'
+                      ? 'bg-gradient-to-r from-brand to-accent text-ink shadow-[0_0_24px_rgba(255,255,255,0.14)] hover:shadow-[0_0_40px_rgba(255,255,255,0.22)]'
                       : 'border border-white/15 bg-white/5 text-snow hover:border-white/30 hover:bg-white/10'
                   }`}
                 >

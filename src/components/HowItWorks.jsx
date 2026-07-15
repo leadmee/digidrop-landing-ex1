@@ -35,31 +35,21 @@ function StepCard({ step, index, horizontal }) {
   const Icon = step.icon
   return (
     <div
-      className={`glass relative flex flex-col justify-between overflow-hidden rounded-3xl p-8 ${
-        horizontal ? 'h-[52vh] w-[82vw] shrink-0 sm:w-[56vw] lg:w-[34vw]' : 'min-h-[280px]'
+      className={`glass relative overflow-hidden rounded-3xl p-7 ${
+        horizontal ? 'w-[80vw] shrink-0 sm:w-[54vw] lg:w-[30vw]' : ''
       }`}
     >
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-6 right-2 font-display text-[9rem] leading-none font-bold text-white/[0.05] select-none"
-      >
-        0{index + 1}
-      </span>
-
-      <div className="relative">
-        <div className="flex items-center gap-3">
-          <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-brand/30 to-accent/30 text-accent">
-            <Icon size={24} />
-          </span>
-          <span className="text-xs font-medium tracking-[0.2em] text-accent uppercase">
-            Шаг 0{index + 1}
-          </span>
-        </div>
-        <h3 className="mt-6 text-2xl font-semibold md:text-3xl">{step.title}</h3>
-        <p className="mt-3 max-w-md text-base leading-relaxed text-fog md:text-lg">{step.text}</p>
+      <div className="flex items-center gap-3">
+        <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-brand/30 to-accent/30 text-accent">
+          <Icon size={22} />
+        </span>
+        <span className="font-mono text-xs tracking-[0.2em] text-fog uppercase">
+          Шаг 0{index + 1}
+        </span>
       </div>
-
-      <div className="relative mt-8 flex flex-wrap gap-2">
+      <h3 className="mt-6 text-2xl font-semibold">{step.title}</h3>
+      <p className="mt-3 text-[15px] leading-relaxed text-fog">{step.text}</p>
+      <div className="mt-6 flex flex-wrap gap-2">
         {step.tags.map((t) => (
           <Tag key={t}>{t}</Tag>
         ))}
@@ -152,7 +142,7 @@ export default function HowItWorks() {
   )
 
   return (
-    <section id="how" ref={sectionRef} style={pinned ? { height: '360vh' } : undefined}>
+    <section id="how" ref={sectionRef} style={pinned ? { height: '260vh' } : undefined}>
       <div
         className={
           pinned ? 'sticky top-0 flex h-screen flex-col justify-center overflow-hidden py-16' : 'py-24 md:py-32'

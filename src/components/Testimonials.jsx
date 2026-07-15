@@ -44,14 +44,14 @@ export default function Testimonials() {
               <Quote size={44} className="absolute top-6 right-6 text-brand/20" aria-hidden="true" />
               <div className="flex gap-1" aria-label="Оценка 5 из 5">
                 {Array.from({ length: 5 }).map((_, s) => (
-                  <Star key={s} size={15} className="fill-amber-400 text-amber-400" />
+                  <Star key={s} size={15} className="fill-snow/70 text-snow/70" />
                 ))}
               </div>
               <blockquote className="mt-4 flex-1 text-[15px] leading-relaxed text-snow/90">
                 «{r.text}»
               </blockquote>
               <figcaption className="mt-6 flex items-center gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent text-sm font-semibold text-white">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-accent text-sm font-semibold text-ink">
                   {r.initials}
                 </span>
                 <div>

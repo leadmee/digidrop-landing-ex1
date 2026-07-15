@@ -65,13 +65,13 @@ export default function ProblemSolution() {
                 0{i + 1}
               </span>
 
-              <div className="group relative rounded-2xl border border-rose-400/20 bg-rose-500/[0.06] p-7 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-rose-500/15 text-rose-300">
+              <div className="group relative rounded-2xl border border-white/10 bg-white/[0.02] p-7 backdrop-blur-sm transition-transform duration-300 hover:-translate-y-1">
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/5 text-fog">
                   <p.pain.icon size={20} />
                 </span>
-                <h3 className="mt-4 text-lg font-semibold text-rose-100">{p.pain.title}</h3>
+                <h3 className="mt-4 text-lg font-semibold text-snow/70">{p.pain.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-fog">{p.pain.text}</p>
-                <span className="pointer-events-none absolute top-1/2 -right-7 hidden -translate-y-1/2 text-brand md:block">
+                <span className="pointer-events-none absolute top-1/2 -right-7 hidden -translate-y-1/2 text-fog md:block">
                   <ArrowRight size={26} />
                 </span>
               </div>

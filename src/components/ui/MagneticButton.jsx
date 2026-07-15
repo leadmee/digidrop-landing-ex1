@@ -26,7 +26,7 @@ export default function MagneticButton({ href = '#', children, className = '' })
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={{ x: sx, y: sy }}
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand to-accent px-10 py-5 text-base font-semibold text-white shadow-[0_0_36px_rgba(124,58,237,0.5)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(124,58,237,0.7)] ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand to-accent px-10 py-5 text-base font-semibold text-ink shadow-[0_0_36px_rgba(255,255,255,0.16)] transition-shadow duration-300 hover:shadow-[0_0_60px_rgba(255,255,255,0.26)] ${className}`}
     >
       {children}
     </motion.a>

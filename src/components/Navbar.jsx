@@ -30,7 +30,7 @@ export default function Navbar() {
       >
         <a href="#" className="flex items-center gap-2.5">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand to-accent">
-            <Zap size={17} className="text-white" fill="currentColor" />
+            <Zap size={17} className="text-ink" fill="currentColor" />
           </span>
           <span className="font-display text-base font-medium tracking-tight">DigiDrop</span>
         </a>

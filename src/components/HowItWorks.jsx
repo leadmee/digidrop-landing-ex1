@@ -179,7 +179,7 @@ export default function HowItWorks() {
               ))}
             </div>
             <div className="mx-auto mt-12 w-full max-w-7xl px-5 md:px-8">
-              <GlowButton href="#pricing">Сделать первый шаг</GlowButton>
+              <GlowButton href="#pricing">Загрузить первый товар</GlowButton>
             </div>
           </>
         )}

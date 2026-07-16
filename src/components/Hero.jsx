@@ -9,7 +9,7 @@ import {
   Music,
   Zap,
 } from 'lucide-react'
-import CubeAssembly from './ui/CubeAssembly'
+import FolderDrop from './ui/FolderDrop'
 import GlowButton from './ui/GlowButton'
 import Marquee from './ui/Marquee'
 
@@ -82,7 +82,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.9 }}
             className="mt-9 flex flex-col items-start gap-3 sm:flex-row sm:items-center"
           >
-            <GlowButton href="#pricing">Попробовать бесплатно</GlowButton>
+            <GlowButton href="#pricing">Запустить автодоставку бесплатно</GlowButton>
             <GlowButton href="#how" variant="secondary">
               Посмотреть, как работает
             </GlowButton>
@@ -105,8 +105,8 @@ export default function Hero() {
           className="relative flex h-[360px] items-center justify-center sm:h-[440px]"
         >
           <div className="animate-pulse-glow absolute h-64 w-64 rounded-full bg-brand/25 blur-[90px]" />
-          <div className="scale-[0.72] sm:scale-90 lg:scale-100">
-            <CubeAssembly />
+          <div className="scale-110 sm:scale-125 lg:scale-150">
+            <FolderDrop />
           </div>
         </motion.div>
       </div>

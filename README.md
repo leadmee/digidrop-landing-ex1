@@ -7,6 +7,8 @@ dark monochrome design, and motion-driven, experimental layout.
 
 > This is a design/portfolio concept, not a real service.
 
+**Live demo:** https://leadmee.github.io/digidrop-landing-ex1/
+
 ## Highlights
 
 - **Scroll-morphing background** — fixed gradient blobs and parallax isometric

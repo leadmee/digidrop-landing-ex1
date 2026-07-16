@@ -23,7 +23,11 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # npm install (not the strict `npm ci`): the lockfile is generated on
+      # Windows, where the native modules pull different platform-specific
+      # optional deps than the Linux CI runner (@emnapi/* wasm fallback). npm ci
+      # rejects that drift; npm install resolves it on the fly.
+      - run: npm install --no-audit --no-fund
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

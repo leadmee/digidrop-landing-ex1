@@ -7,7 +7,7 @@ export default function Marquee({ items, reverse = false, speed = 30 }) {
   return (
     <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
       <div
-        className={`flex w-max gap-4 py-2 hover:[animation-play-state:paused] ${
+        className={`flex w-max gap-4 py-2 ${
           reverse ? 'animate-marquee-reverse' : 'animate-marquee'
         }`}
         style={{ animationDuration: `${speed}s` }}

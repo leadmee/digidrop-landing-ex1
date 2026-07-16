@@ -28,8 +28,8 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="relative border-t border-white/10">
-      <div className="pointer-events-none overflow-x-clip px-5 pt-8 pb-4 md:px-8" aria-hidden="true">
-        <p className="mx-auto max-w-7xl whitespace-nowrap bg-gradient-to-b from-white/14 to-white/[0.07] bg-clip-text text-center font-display text-[16vw] leading-[1.28] font-bold text-transparent select-none md:text-[12vw]">
+      <div className="pointer-events-none overflow-x-clip px-5 pt-2 pb-0 md:px-8" aria-hidden="true">
+        <p className="mx-auto max-w-7xl whitespace-nowrap bg-gradient-to-b from-white/14 to-white/[0.07] bg-clip-text pb-[0.2em] text-center font-display text-[16vw] leading-[1.05] font-bold text-transparent select-none md:text-[12vw]">
           DigiDrop
         </p>
       </div>

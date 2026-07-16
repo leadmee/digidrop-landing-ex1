@@ -44,7 +44,7 @@ export default function Hero() {
 
           <motion.h1
             aria-label={words.join(' ')}
-            className="mt-6 font-display text-[2.6rem] leading-[1.05] font-semibold tracking-tight sm:text-6xl lg:text-[5rem] lg:leading-[0.98]"
+            className="mt-6 font-display text-[2.6rem] leading-[1.12] font-semibold tracking-tight sm:text-6xl lg:text-[5rem] lg:leading-[1.04]"
             initial={instant ? false : 'hidden'}
             animate="visible"
             variants={{ visible: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } } }}
@@ -57,7 +57,7 @@ export default function Hero() {
                   hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
                   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.55 } },
                 }}
-                className={`mr-[0.22em] inline-block ${
+                className={`mr-[0.22em] inline-block pb-[0.14em] ${
                   i >= 2 ? 'bg-gradient-to-br from-brand via-accent to-magenta bg-clip-text text-transparent' : ''
                 }`}
               >
@@ -105,7 +105,7 @@ export default function Hero() {
           className="relative flex h-[360px] items-center justify-center sm:h-[440px]"
         >
           <div className="animate-pulse-glow absolute h-64 w-64 rounded-full bg-brand/25 blur-[90px]" />
-          <div className="scale-110 sm:scale-125 lg:scale-150">
+          <div className="[zoom:1.15] sm:[zoom:1.3] lg:[zoom:1.55]">
             <FolderDrop />
           </div>
         </motion.div>
